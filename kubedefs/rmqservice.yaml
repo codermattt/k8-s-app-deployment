@@ -1,0 +1,12 @@
+apiVersion: app/v1
+kind: Service
+metadata:
+  name: vprormq01    # same as in application.properties file
+spec:                 # Deployment specifications
+  selector:
+    app: vprormq       # Service (vprormq01) will connect to the Deployment's Pods based on the selector match
+  ports:
+  - protocol: TCP
+    port: 5672
+    targetPort: vprormq-port  # This should match the port name in your deployment
+  type: ClusterIP     # This service will be accessible within the cluster only

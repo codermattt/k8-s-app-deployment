@@ -1,0 +1,13 @@
+apiVersion: app/v1
+kind: Service
+metadata:
+  labels: 
+    app: vprocache01    # same as in application.properties file
+spec:             # Deployment specifications
+  selector:
+    app: vpromc    # Service (vprocache01) will connect to the Deployment's Pods based on the selector match
+  ports:
+  - protocol: TCP
+    port: 11211
+    targetPort: vpromc-port
+  type: ClusterIP  # This service will be accessible within the cluster only

@@ -1,0 +1,21 @@
+apiVersion: app/v1
+kind: Deployment
+metadata:
+  labels: 
+    app: vpromc
+spec:             # Deployment specifications
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vpromc
+  template:
+    metadata:
+      labels:
+        app: vpromc    
+    spec:         # configuration for the pod that gets created under this deployment
+      containers:
+      - name: vpromc-container
+        image: memcached:latest
+        ports:
+        - name: vpromc-port
+          containerPort: 11211   # Memcached default port

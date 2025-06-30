@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vprormq-dep
+  labels: 
+    app: vprormq
+spec:             # Deployment specifications
+  selector:
+    matchLabels:
+      app: vprormq
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: vprormq    
+    spec:         # configuration for the pod that gets created under this deployment
+      containers:
+      - name: vprormq-container
+        image: rabbitmq
+        ports:
+        - name: vprormq-port
+          containerPort: 5672   # RabbitMQ default port
+        env:
+        - name: RABBITMQ_DEFAULT_PASS
+          valueFrom:
+            secretKeyRef:
+              name: my-secret
+              key: rmq-pass  # This should match the key in your secret.yaml
+        - name: RABBITMQ_DEFAULT_USER
+          value: "guest"
+
